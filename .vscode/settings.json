@@ -1,0 +1,22 @@
+{
+  "conventionalCommits.scopes": [
+    "api",
+    "auth",
+    "database",
+    "config",
+    "types",
+    "tests",
+    "docker",
+    "docs",
+    "ci",
+    "drizzle",
+    "seed",
+    "settings.json",
+    "swagger",
+    "tsconfig.json",
+    "drizzle.config.ts",
+    "package.json",
+    ".env",
+    ".env.backend"
+  ]
+}
