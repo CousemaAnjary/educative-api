@@ -1,0 +1,16 @@
+{
+  "conventionalCommits.scopes": [
+    "api",
+    "auth",
+    "database",
+    "config",
+    "types",
+    "tests",
+    "docker",
+    "docs",
+    "ci",
+    "drizzle",
+    "seed",
+    "settings.json"
+  ]
+}
