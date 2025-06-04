@@ -32,13 +32,12 @@ cp .env.backend .env
 
 ```
 
-
 ## Démarrage avec Docker
 
 1. Construire et démarrer les services
 
 ```bash
-docker-compose up -d
+docker compose up --build -d
 ```
 
 2. Les services suivants seront démarrés :
@@ -46,8 +45,8 @@ docker-compose up -d
    - PostgreSQL (port 5432)
    - pgAdmin (port 5050)
    - Temporal (port 7233)
-
 3. Accéder aux services :
+
    - pgAdmin : http://localhost:5050
      - Email : admin@admin.com
      - Mot de passe : admin
