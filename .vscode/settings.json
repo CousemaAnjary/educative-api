@@ -11,6 +11,12 @@
     "ci",
     "drizzle",
     "seed",
-    "settings.json"
+    "settings.json",
+    "swagger",
+    "tsconfig.json",
+    "drizzle.config.ts",
+    "package.json",
+    ".env",
+    ".env.backend"
   ]
 }
