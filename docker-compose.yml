@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-educatif
+    environment:
+      - POSTGRES_USER=${PG_USER:-postgres}
+      - POSTGRES_PASSWORD=${PG_PASSWORD:-postgres}
+      - POSTGRES_DB=${PG_DATABASE:-educatif_db}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+
+  temporal:
+    image: temporalio/auto-setup:1.17.0
+    container_name: temporal-server
+    environment:
+      - TEMPORAL_BROADCAST_ADDRESS=0.0.0.0
+    ports:
+      - "7233:7233"
+    networks:
+      - backend-network
+
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: backend-educatif
+#    restart: always
+#    env_file:
+#      - .env
+#    depends_on:
+#      - postgres
+#      - temporal
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - backend-network
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASSWORD}"
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - backend-network
+networks:
+  backend-network:
+
+volumes:
+  pgdata:
