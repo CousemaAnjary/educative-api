@@ -8,7 +8,7 @@ import { integer, json, pgTable, serial, timestamp, uuid } from "drizzle-orm/pg-
 export const exercices_resultats = pgTable("exercices_resultats", {
   id: serial("id").primaryKey(),
   userId: uuid("user_id").references(() => users.id),
-  exercice_id: integer("exercice_id").references(() => exercices.id),
+  exerciceId: integer("exercice_id").references(() => exercices.id),
   score: integer("score"),
   reponses: json("reponses"),
   date_de_soumission: timestamp("date_de_soumission"),
@@ -21,8 +21,14 @@ export const exercices_resultats = pgTable("exercices_resultats", {
 export const exercices_resultatsRelations = relations(exercices_resultats, ({ one }) => ({
 
   // ---- Exercices Resultats <-> Utilisateurs
-   users: one(users, {
+   user: one(users, {
     fields: [exercices_resultats.userId],
     references: [users.id],
+  }),
+
+  // ---- Exercices Resultats <-> Exercices
+  exercice: one(exercices, {
+    fields: [exercices_resultats.exerciceId],
+    references: [exercices.id],
   }),
 }))
