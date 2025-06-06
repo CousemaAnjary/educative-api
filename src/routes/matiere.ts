@@ -6,5 +6,7 @@ const MatiereController = require("../controllers/MatiereController")
 
 
 router.get("/", MatiereController.getAllMatiere)
+router.post("/", MatiereController.createMatiere)
+
 
 export const matiereRouter = router
