@@ -63,9 +63,23 @@ module.exports = {
     try {
       const chapitreId = req.params.id;
 
-       await ChapitreService.getChapitreById(chapitreId);
+       await ChapitreService.updateChapitre(chapitreId , validatedData.data);
       return res.status(200).json({ success: true, message: "Chapitre mis à jour avec succès" });
 
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
+  },
+
+  async deleteChapitre(req: Request, res: Response) {
+    const chapitreId = req.params.id
+    try {
+      await ChapitreService.deleteChapitre(chapitreId);
+      return res.status(200).json({ success: true, message: "Chapitre supprimé avec succès" });
     } catch (error) {
       if (error instanceof Error) {
         return res.status(400).json({ success: false, message: error.message });
