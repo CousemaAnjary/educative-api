@@ -7,7 +7,7 @@ import { matieres } from "../db/schema";
 
 export const MatiereService = {
   async getAllMatieres()  {
-    
+
     // Récupération de toutes les matières
     const matieresList = await db.query.matieres.findMany();
     return matieresList;
@@ -28,6 +28,14 @@ export const MatiereService = {
       description,
       etat,
     });
+  },
+
+  async getMatiereById(id: string) {
+    // Recherche de la matière par ID
+    const matiere = await db.query.matieres.findFirst({ where: eq(matieres.id, Number(id)) });
+    if (!matiere) throw new Error("Matière not found")
+      
+    return matiere
   }
 
  }
