@@ -4,7 +4,19 @@ import { MatiereService } from "../services/MatiereService"
 
 
 module.exports = {
-  async getAllMatiere(req: Request, res: Response) {},
+  async getAllMatiere(req: Request, res: Response) {
+    try {
+      const matieres = await MatiereService.getAllMatieres()
+      return res.status(200).json({ success: true, data: matieres })
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message })
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." })
+    }
+  },
 
   async createMatiere(req: Request, res: Response) {
     // Validation des données d'entrée (Zod)
@@ -22,7 +34,7 @@ module.exports = {
       // En cas d'erreur inattendue,
       return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
     }
-    
-
   }
+
+
 }

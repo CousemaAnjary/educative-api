@@ -6,7 +6,12 @@ import { matieres } from "../db/schema";
 
 
 export const MatiereService = {
-  async getAllMatieres()  { },
+  async getAllMatieres()  {
+    
+    // Récupération de toutes les matières
+    const matieresList = await db.query.matieres.findMany();
+    return matieresList;
+   },
 
   async createMatiere(data: z.infer<typeof matiereSchema>) {
     // Destructuration des données validées
