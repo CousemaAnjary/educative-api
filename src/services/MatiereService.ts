@@ -57,4 +57,13 @@ export const MatiereService = {
         etat,
       }).where(eq(matieres.id, Number(id)))
   },
+
+  async deleteMatiere(id: string) {
+    // Vérification si la matière existe
+    const existingMatiere = await db.query.matieres.findFirst({ where: eq(matieres.id, Number(id))})
+    if (!existingMatiere) throw new Error("Matière not found")
+
+    // Suppression de la matière
+    await db.delete(matieres).where(eq(matieres.id, Number(id)))
+  },
 }
