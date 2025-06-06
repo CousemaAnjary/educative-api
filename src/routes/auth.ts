@@ -31,8 +31,6 @@ const AuthController = require("../controllers/AuthController")
  *                 type: string
  *               password:
  *                 type: string
- *               roleName:
- *                 type: string
  *             required:
  *               - name
  *               - email
