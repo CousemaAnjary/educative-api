@@ -2,6 +2,7 @@ import { chapitreSchema } from "../schema/chapitreSchema"
 import db from "../db/drizzle"
 import { z } from "zod"
 import { chapitres } from "../db/schema"
+import { eq } from "drizzle-orm"
 
 export const ChapitreService = {
   async getAllChapitre() {
@@ -50,5 +51,30 @@ export const ChapitreService = {
     }
 
     return chapitre;
-  }
+  },
+
+  async updateChapitre(id: string, data: z.infer<typeof chapitreSchema>) {
+
+     // Destructuration des données validées
+    const { nom, description, matiereId, etat } = data
+  
+    // Vérification si le chapitre existe
+    const existingChapitre = await db.query.chapitres.findFirst({ where: (chapitres, { eq }) => eq(chapitres.id, Number(id))}); 
+    if (!existingChapitre) throw new Error("Chapitre non trouvé");
+      
+    
+    // Vérifie si un chapitre avec le même nom et même matière existe déjà
+    const existing = await db.query.chapitres.findFirst({where: (chapitres, { and, eq }) =>and(eq(chapitres.nom, nom), eq(chapitres.matiereId, matiereId))});
+    if (existing && existing.id !== Number(id))  throw new Error("Un chapitre avec ce nom existe déjà pour cette matière.");
+     
+    // Mise à jour du chapitre
+    await db.update(chapitres)
+      .set({
+        nom,
+        description,  
+        matiereId,
+        etat
+      })
+      .where(eq(chapitres.id, Number(id))); 
+    }
 }
