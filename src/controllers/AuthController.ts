@@ -14,7 +14,11 @@ module.exports = {
       return res.status(201).json({ success: true, message: "User registered successfully" });
       
     } catch (error) {
-      res.status(500).json({ message: "Internal server error", success: false })
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
     }
   },
 
@@ -29,7 +33,11 @@ module.exports = {
       return res.status(200).json({success: true, message: "Login successful", token })
 
     } catch (error) {
-      res.status(500).json({ message: "Internal server error", success: false })
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
     }
   },
 }
