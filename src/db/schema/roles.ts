@@ -13,5 +13,7 @@ export const roles = pgTable("roles", {
 // ----------------------------------------------------------------------
 
 export const rolesRelations = relations(roles, ({ many }) => ({
+
+  // ---- Rôles <-> Utilisateurs
   users: many(users),
 }))

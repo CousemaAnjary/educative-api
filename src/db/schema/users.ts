@@ -1,5 +1,6 @@
 import { roles } from "./roles"
 import { relations } from "drizzle-orm"
+import { exercices_resultats } from "./exercices_resultats";
 import { boolean, integer, pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core"
 
 
@@ -20,10 +21,16 @@ export const users = pgTable("users", {
 // Relations entre les tables
 // ----------------------------------------------------------------------
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
+
+  // ---- Utilisateurs <-> Roles
   role: one(roles, {
     fields: [users.roleId],
     references: [roles.id],
   }),
+
+  // ---- Utilisateurs <-> Exercices Resultats
+  exercices_resultats: many(exercices_resultats),
+
 }));
 

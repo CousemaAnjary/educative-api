@@ -6,7 +6,8 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core"
-import { lecons } from "./matieres"
+import { lecons } from "./lecons"
+
 
 export const exercices = pgTable("exercices", {
   id: serial("id").primaryKey(),
