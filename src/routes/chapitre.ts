@@ -6,7 +6,7 @@ const ChapitreController = require("../controllers/ChapitreController")
 
 router.get("/", ChapitreController.getAllChapitre);
 router.post("/", ChapitreController.createChapitre);
-// router.get("/:id", ChapitreController.getChapitreById);
+router.get("/:id", ChapitreController.getChapitreById);
 // router.put("/:id", ChapitreController.updateChapitre);
 // router.delete("/:id", ChapitreController.deleteChapitre);
 

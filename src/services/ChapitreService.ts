@@ -35,4 +35,20 @@ export const ChapitreService = {
       etat
     })
   },
+
+  async getChapitreById(id: string) {
+    const chapitre = await db.query.chapitres.findFirst({
+      where: (chapitres, { eq }) => eq(chapitres.id, Number(id)),
+      with: {
+        matiere: true,
+        lecons: true,
+      },
+    });
+
+    if (!chapitre) {
+      throw new Error("Chapitre non trouvé");
+    }
+
+    return chapitre;
+  }
 }

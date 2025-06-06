@@ -10,6 +10,6 @@ const router = express.Router();
 router.use("/health", healthRouter);
 router.use("/auth", authRouter);
 router.use("/matieres", matiereRouter);
-router.use("chapitres", chapitreRouter); 
+router.use("/chapitres", chapitreRouter); 
 
 export default router;
