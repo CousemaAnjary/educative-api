@@ -6,6 +6,7 @@ import db from "../db/drizzle"
 import { roles, users } from "../db/schema"
 import { loginSchema, registerSchema } from "../schema/authSchema"
 
+
 const JWT_SECRET = process.env.JWT_SECRET as string 
 
 export const AuthService = {

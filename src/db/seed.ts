@@ -1,5 +1,6 @@
 import db from "./drizzle";
-import { roles } from "./schema";
+import { roles } from "./schema/roles";
+
 
 async function seed() {
   await db.insert(roles).values([

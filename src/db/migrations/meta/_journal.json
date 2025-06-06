@@ -8,6 +8,13 @@
       "when": 1749129017599,
       "tag": "0000_naive_shard",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749202790571,
+      "tag": "0001_curly_the_executioner",
+      "breakpoints": true
     }
   ]
 }
