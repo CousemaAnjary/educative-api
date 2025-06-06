@@ -1,14 +1,6 @@
+import { roles } from "./roles"
+import { relations } from "drizzle-orm"
 import { boolean, integer, pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core"
-
-/**
- * Table 'roles' : contient la liste des rôles possibles.
- * Exemple de rôles : 'eleve', 'enseignant', 'admin', etc.
- */
-
-export const roles = pgTable("roles", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull().unique(),
-})
 
 
 export const users = pgTable("users", {
@@ -22,3 +14,16 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
+
+
+// ----------------------------------------------------------------------
+// Relations entre les tables
+// ----------------------------------------------------------------------
+
+export const usersRelations = relations(users, ({ one }) => ({
+  role: one(roles, {
+    fields: [users.roleId],
+    references: [roles.id],
+  }),
+}));
+
