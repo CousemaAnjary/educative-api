@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { chapitreSchema } from "../schema/chapitreSchema"
+import { chapitreSchema, etatSchema } from "../schema/chapitreSchema"
 import { ChapitreService } from "../services/ChapitreService"
 
 module.exports = {
@@ -65,6 +65,26 @@ module.exports = {
 
        await ChapitreService.updateChapitre(chapitreId , validatedData.data);
       return res.status(200).json({ success: true, message: "Chapitre mis à jour avec succès" });
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
+  },
+
+  async updateChapitreEtat(req: Request, res: Response) {
+    // Validation des données d'entrée (Zod)
+    const validatedEtat = etatSchema.safeParse(req.body);
+    if (!validatedEtat.success) return res.status(400).json({ success: false, error: validatedEtat.error.format() });
+
+    try {
+      const chapitreId = req.params.id;
+
+      await ChapitreService.updateChapitreEtat(chapitreId, validatedEtat.data);
+      return res.status(200).json({ success: true, message: "État du chapitre mis à jour avec succès" });
 
     } catch (error) {
       if (error instanceof Error) {

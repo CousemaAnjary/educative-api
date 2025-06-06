@@ -9,3 +9,7 @@ export const chapitreSchema = z.object({
     invalid_type_error: "L'ID de la matière doit être un nombre",
   }),
 })
+
+export const etatSchema = z.object({
+  etat: z.enum(["Brouillon", "published", "archived"]).default("Brouillon"),
+})

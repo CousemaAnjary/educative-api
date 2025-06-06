@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm"
 import { z } from "zod"
 import db from "../db/drizzle"
 import { chapitres } from "../db/schema"
-import { chapitreSchema } from "../schema/chapitreSchema"
+import { chapitreSchema, etatSchema } from "../schema/chapitreSchema"
 
 export const ChapitreService = {
   async getAllChapitre() {
@@ -81,6 +81,23 @@ export const ChapitreService = {
         etat,
       })
       .where(eq(chapitres.id, Number(id)))
+  },
+
+  async updateChapitreEtat(id: string, data: z.infer<typeof etatSchema>) {
+    // Destructuration des données validées
+    const { etat } = data
+
+    // Vérification si le chapitre existe
+    const existingChapitre = await db.query.chapitres.findFirst({
+      where: (chapitres, { eq }) => eq(chapitres.id, Number(id)),
+    })
+    if (!existingChapitre) throw new Error("Chapitre non trouvé")
+
+    // Mise à jour de l'état du chapitre
+    await db
+      .update(chapitres)
+      .set({ etat })
+      .where(eq(chapitres.id, Number(id)))  
   },
 
   async deleteChapitre(id: string) {

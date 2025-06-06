@@ -119,6 +119,9 @@ router.get("/:id", ChapitreController.getChapitreById);
  */
 router.put("/:id", ChapitreController.updateChapitre);
 
+
+router.patch("/:id", ChapitreController.updateChapitreEtat);
+
 /**
  * @swagger
  * /chapitres/{id}:
@@ -140,5 +143,7 @@ router.put("/:id", ChapitreController.updateChapitre);
  *         description: Erreur serveur
  */
 router.delete("/:id", ChapitreController.deleteChapitre);
+
+
 
 export const chapitreRouter = router;
