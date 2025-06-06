@@ -42,7 +42,7 @@ export const AuthService = {
     const { email, password } = data
 
     // Recherche de l'utilisateur dans la base de données
-    const user = await db.query.users.findFirst({ where: eq(users.email, email) })
+    const user = await db.query.users.findFirst({ where: eq(users.email, email) , with: { role: true } })
     if (!user) throw new Error("Invalid credentials")
 
     // Comparer les mot de passe
@@ -50,7 +50,7 @@ export const AuthService = {
     if (!isPasswordValid) throw new Error("Invalid credentials")
 
     // Générer un token JWT (à implémenter)
-    const token = jwt.sign({ id: user.id, email: user.email , role:user.roleId }, JWT_SECRET, { expiresIn: "1h" })
+    const token = jwt.sign({ id: user.id, email: user.email , role:user.role.name }, JWT_SECRET, { expiresIn: "1h" })
 
     // Retourner le token
     return {token, user}

@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET as string
 interface AuthPayload {
   id: string;
   email: string;
-  roleId: number;
+  role: string;
 }
 
 declare global {
