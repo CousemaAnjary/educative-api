@@ -8,6 +8,6 @@ const router = express.Router();
 // Routes de santé
 router.use("/health", healthRouter);
 router.use("/auth", authRouter);
-router.use("/matiere", matiereRouter);
+router.use("/matieres", matiereRouter);
 
 export default router;
