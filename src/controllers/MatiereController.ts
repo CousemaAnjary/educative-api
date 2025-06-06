@@ -53,6 +53,25 @@ module.exports = {
       // En cas d'erreur inattendue,
       return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
     }
+  },
+
+  async updateMatiere(req: Request, res: Response) {
+    // Validation des données d'entrée (Zod)
+    const validatedData = matiereSchema.safeParse(req.body)
+    if (!validatedData.success) return res.status(400).json({ success: false, error: validatedData.error.format() }) 
+
+    try {
+      const matiereId = req.params.id 
+      await MatiereService.updateMatiere(matiereId, validatedData.data)
+      return res.status(200).json({ success: true, message: "Matière mise à jour avec succès" });
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
   }
 
 
