@@ -82,6 +82,7 @@ educative-api/
 - `npm run build` : Compiler le projet TypeScript
 - `npm start` : Démarrer le serveur en production
 - `npm run test` : Exécuter les tests
+- `npx tsx src/db/seed.ts` : lancer le seeder
 
 ## Documentation de l'API
 
@@ -102,3 +103,4 @@ La documentation Swagger est disponible sur http://localhost:3000/api-docs
 2. Commiter vos changements
 3. Pusher la branche
 4. Créer une Pull Request
+

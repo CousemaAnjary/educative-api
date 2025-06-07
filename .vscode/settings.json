@@ -18,6 +18,7 @@
     "package.json",
     ".env",
     ".env.backend",
-    "readme.md"
+    "readme.md",
+    "temporal"
   ]
 }
