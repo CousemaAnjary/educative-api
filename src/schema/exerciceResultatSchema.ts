@@ -2,7 +2,6 @@ import { z } from "zod"
 
 
 export const exerciceResultatSchema = z.object({
-  userId: z.string().uuid({ message: "ID utilisateur invalide" }),
   exerciceId: z.number().int({ message: "ID exercice invalide" }),
   score: z.number().int().min(0, { message: "Le score doit être un entier positif" }),
   reponses: z.array(
