@@ -1,8 +1,8 @@
-import db from "../db/drizzle";
-import { exerciceResultatSchema } from "../schema/exerciceResultatSchema";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
+import db from "../db/drizzle";
 import { exercices, exercices_resultats } from "../db/schema";
-import { eq, and } from "drizzle-orm";
+import { exerciceResultatSchema } from "../schema/exerciceResultatSchema";
 
 export const ExerciceResulatSercice = {
   async createExerciceResultat(userId: string, data: z.infer<typeof exerciceResultatSchema>) {
@@ -32,10 +32,9 @@ export const ExerciceResulatSercice = {
     }
 
     // 3. Parse les questions
-    const questions: {
-      enoncer: string;
-      options: { label: string; value: string; correct: boolean }[];
-    }[] = typeof exercice.questions === "string"
+    const questions: { enoncer: string; options: { label: string; value: string; correct: boolean }[] }[] = 
+    
+  typeof exercice.questions === "string"
       ? JSON.parse(exercice.questions)
       : exercice.questions;
 

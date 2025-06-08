@@ -5,8 +5,7 @@ export const exerciceResultatSchema = z.object({
   exerciceId: z.number().int({ message: "ID exercice invalide" }),
   reponses: z.array(
     z.object({
-      selected: z.string(),     // exemple : "A"
-      correct: z.boolean(),     // exemple : true ou false
+      selected: z.string(),
     })
   ),
   date_de_soumission: z.union([
