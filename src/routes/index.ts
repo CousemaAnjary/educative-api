@@ -5,6 +5,7 @@ import { exerciceRouter } from "./exercice"
 import { healthRouter } from "./health"
 import { leconRouter } from "./lecon"
 import { matiereRouter } from "./matiere"
+import { exerciceResultatRouter } from "./exerciceResultat"
 
 const router = express.Router()
 
@@ -15,5 +16,6 @@ router.use("/matieres", matiereRouter)
 router.use("/chapitres", chapitreRouter)
 router.use("/lecons", leconRouter)
 router.use("/exercices", exerciceRouter)
+router.use("/exercices-resultats", exerciceResultatRouter) 
 
 export default router
