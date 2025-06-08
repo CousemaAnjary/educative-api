@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { exerciceResultatSchema } from "schema/exerciceResultatSchema"
-import { ExerciceResulatSercice } from "services/ExerciceResultatSercice"
+import { exerciceResultatSchema } from "../schema/exerciceResultatSchema"
+import { ExerciceResulatSercice } from "../services/ExerciceResultatSercice"
 
 module.exports = {
   async getAllExerciceResultats(req: Request, res: Response) {},
