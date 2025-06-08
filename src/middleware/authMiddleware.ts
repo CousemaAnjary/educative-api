@@ -17,11 +17,15 @@ declare global {
   }
 }
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export function authMiddleware(req: Request, res: Response, next: NextFunction) : void {
 
   // Vérifier la présence du header Authorization
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) return res.status(401).json({ success: false, message: "Token manquant ou malformé" });
+ // 1. Vérifie la présence et le format du token
+ if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  res.status(401).json({ success: false, message: "Token manquant ou malformé" });
+  return;
+}
     
   // Extraire le token du header Authorization
   const token = authHeader.split(" ")[1];
@@ -33,6 +37,6 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     next()
 
   } catch (error) {
-    return res.status(401).json({ success: false, message: "Token invalide" });
+    res.status(401).json({ success: false, message: "Token invalide" });
   }
 }
