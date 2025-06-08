@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "./drizzle";
+import db from "./drizzle"; 
 import bcrypt from "bcrypt";
 import { roles } from "./schema/roles";
 import { users } from "./schema/users";
