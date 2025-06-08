@@ -7,7 +7,6 @@ const ExerciceResultatController = require("../controllers/ExerciceResultatContr
 router.get("/", ExerciceResultatController.getAllExerciceResultats);
 router.post("/", ExerciceResultatController.createExerciceResultat);
 router.get("/:id", ExerciceResultatController.getExerciceResultatById);
-router.put("/:id", ExerciceResultatController.updateExerciceResultat);
-router.delete("/:id", ExerciceResultatController.deleteExerciceResultat);
+
 
 export const exerciceResultatRouter = router;

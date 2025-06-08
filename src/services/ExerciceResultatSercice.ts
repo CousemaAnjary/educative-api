@@ -62,5 +62,31 @@ export const ExerciceResulatSercice = {
     }).returning();
 
     return resultat;
-  }
+  },
+
+  async getAllExerciceResultats() {
+    const results = await db.query.exercices_resultats.findMany({
+      with: {
+        exercice: true, // Inclure les détails de l'exercice associé
+      },
+    });
+
+    return results;
+  },
+
+  async getExerciceResultatById(resultId: string) {
+    const result = await db.query.exercices_resultats.findFirst({
+      where: eq(exercices_resultats.id, Number(resultId)),
+      with: {
+        exercice: true, // Inclure les détails de l'exercice associé
+      },
+    });
+
+    if (!result) {
+      throw new Error("Résultat d'exercice introuvable.");
+    }
+
+    return result;
+  },
+
 };
