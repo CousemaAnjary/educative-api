@@ -7,6 +7,7 @@ import { leconRouter } from "./lecon"
 import { matiereRouter } from "./matiere"
 import { exerciceResultatRouter } from "./exerciceResultat"
 import { authMiddleware } from "../middleware/authMiddleware"
+import { simulationExamenRouter } from "./simulationExamen"
 
 
 const router = express.Router()
@@ -19,5 +20,6 @@ router.use("/chapitres", chapitreRouter)
 router.use("/lecons", leconRouter)
 router.use("/exercices", exerciceRouter)
 router.use("/exercices-resultats", authMiddleware, exerciceResultatRouter)
+router.use("/simulations-examens", simulationExamenRouter)
 
 export default router
