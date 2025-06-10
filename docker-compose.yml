@@ -11,19 +11,10 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - backend-network
 
-  temporal:
-    image: temporalio/auto-setup:1.17.0
-    container_name: temporal-server
-    environment:
-      - TEMPORAL_BROADCAST_ADDRESS=0.0.0.0
-    ports:
-      - "7233:7233"
-    networks:
-      - backend-network
 
 #  backend:
 #    build:

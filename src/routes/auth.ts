@@ -1,37 +1,21 @@
-import { Router, Request, Response } from "express";
-import { v4 as uuid } from "uuid";
+import { Router } from "express"
+const router = Router()
 
-interface Person {
-  id: string;
-  fullName: string;
-  email: string;
-  role: string;
-}
-
-const persons: Person[] = [];
-
-const router = Router();
+// Importation des contrôleurs
+const AuthController = require("../controllers/AuthController")
 
 /**
  * @swagger
- * /auth/persons:
- *   get:
- *     summary: Récupère la liste des personnes
- *     tags:
- *       - Auth
- *     responses:
- *       200:
- *         description: Liste des personnes
+ * tags:
+ *   - name: Auth
+ *     description: Opérations liées à l'authentification des utilisateurs
  */
-router.get("/persons", (req: Request, res: Response) => {
-  res.json(persons);
-});
 
 /**
  * @swagger
- * /auth/persons:
+ * /auth/register:
  *   post:
- *     summary: Crée une nouvelle personne
+ *     summary: Enregistre un nouvel utilisateur
  *     tags:
  *       - Auth
  *     requestBody:
@@ -41,72 +25,34 @@ router.get("/persons", (req: Request, res: Response) => {
  *           schema:
  *             type: object
  *             properties:
- *               fullName:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
- *               role:
+ *               password:
  *                 type: string
  *             required:
- *               - fullName
+ *               - name
  *               - email
- *               - role
+ *               - password
+ *               - roleName
  *     responses:
  *       201:
- *         description: Personne créée avec succès
+ *         description: Utilisateur créé avec succès
  *       400:
- *         description: Erreur de validation
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
  */
-router.post("/persons", (req: Request, res: Response) => {
-  const person: Person = {
-    id: uuid(),
-    ...req.body,
-  };
-  persons.push(person);
-  res.status(201).json(person);
-});
+router.post("/register", AuthController.register)
 
 /**
  * @swagger
- * /auth/persons/{id}:
- *   get:
- *     summary: Récupère une personne par son ID
+ * /auth/login:
+ *   post:
+ *     summary: Connecte un utilisateur existant et renvoie un token JWT
  *     tags:
  *       - Auth
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *     responses:
- *       200:
- *         description: Personne trouvée
- *       404:
- *         description: Personne non trouvée
- */
-router.get("/persons/:id", (req: Request, res: Response) => {
-  const person = persons.find((p) => p.id === req.params.id);
-  if (!person) {
-    res.status(404).send("Personne non trouvée");
-  } else {
-    res.json(person);
-  }
-});
-
-/**
- * @swagger
- * /auth/persons/{id}:
- *   put:
- *     summary: Met à jour une personne par son ID
- *     tags:
- *       - Auth
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
  *     requestBody:
  *       required: true
  *       content:
@@ -114,57 +60,39 @@ router.get("/persons/:id", (req: Request, res: Response) => {
  *           schema:
  *             type: object
  *             properties:
- *               fullName:
- *                 type: string
  *               email:
  *                 type: string
- *               role:
+ *               password:
  *                 type: string
+ *             required:
+ *               - email
+ *               - password
  *     responses:
  *       200:
- *         description: Personne mise à jour avec succès
- *       400:
- *         description: Erreur de validation
- *       404:
- *         description: Personne non trouvée
+ *         description: Connexion réussie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     roleId:
+ *                       type: integer
+ *       401:
+ *         description: Identifiants invalides
+ *       500:
+ *         description: Erreur serveur
  */
-router.put("/persons/:id", (req: Request, res: Response) => {
-  const person = persons.find((p) => p.id === req.params.id);
-  if (!person) {
-    res.status(404).send("Personne non trouvée");
-  } else {
-    Object.assign(person, req.body);
-    res.json(person);
-  }
-});
+router.post("/login", AuthController.login)
 
-/**
- * @swagger
- * /auth/persons/{id}:
- *   delete:
- *     summary: Supprime une personne par son ID
- *     tags:
- *       - Auth
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *     responses:
- *       200:
- *         description: Personne supprimée avec succès
- *       404:
- *         description: Personne non trouvée
- */
-router.delete("/persons/:id", (req: Request, res: Response) => {
-  const index = persons.findIndex((p) => p.id === req.params.id);
-  if (index === -1) {
-    res.status(404).send("Personne non trouvée");
-  } else {
-    persons.splice(index, 1);
-    res.json({ message: "Personne supprimée avec succès" });
-  }
-});
-
-export const authRouter = router;
+export const authRouter = router
