@@ -119,6 +119,37 @@ router.get("/:id", ChapitreController.getChapitreById);
  */
 router.put("/:id", ChapitreController.updateChapitre);
 
+/**
+ * @swagger
+ * /chapitres/{id}:
+ *   patch:
+ *     summary: Met à jour partiellement un chapitre (par exemple son état)
+ *     tags: [Chapitres]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               etat:
+ *                 type: string
+ *             required:
+ *               - etat
+ *     responses:
+ *       200:
+ *         description: Chapitre mis à jour partiellement
+ *       404:
+ *         description: Chapitre non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
 
 router.patch("/:id", ChapitreController.updateChapitreEtat);
 

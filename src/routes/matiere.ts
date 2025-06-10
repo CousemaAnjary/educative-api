@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-// Importation des contrôleurs
+// Impodes cortation ntrôleurs
 const MatiereController = require("../controllers/MatiereController");
 
 /**

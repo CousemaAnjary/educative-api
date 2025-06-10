@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "./drizzle";
+import db from "./drizzle"; 
 import bcrypt from "bcrypt";
 import { roles } from "./schema/roles";
 import { users } from "./schema/users";
@@ -104,7 +104,7 @@ async function seed() {
     etat: "actif",
     questions: JSON.stringify([
       {
-        question: "Résous l'équation : 2x + 5 = 13",
+        enoncer: "Résous l'équation : 2x + 5 = 13",
         options: [
           { label: "A", value: "x = 4", correct: true },
           { label: "B", value: "x = 6", correct: false },
