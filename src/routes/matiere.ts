@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-// Impodes cortation ntrôleurs
+// Importation du contrôleur
 const MatiereController = require("../controllers/MatiereController");
 
 /**
@@ -63,6 +63,26 @@ router.post("/", MatiereController.createMatiere);
 
 /**
  * @swagger
+ * /matieres/niveau:
+ *   get:
+ *     summary: Récupère les matières selon le niveau de l'utilisateur connecté
+ *     tags: [Matières]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liste des matières par niveau utilisateur
+ *       401:
+ *         description: Non autorisé - utilisateur non authentifié
+ *       404:
+ *         description: Aucune matière trouvée
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/niveau", MatiereController.getMatieresByUserNiveau);
+
+/**
+ * @swagger
  * /matieres/{id}:
  *   get:
  *     summary: Récupère une matière par son ID
@@ -79,9 +99,6 @@ router.post("/", MatiereController.createMatiere);
  *       404:
  *         description: Matière non trouvée
  */
-
-router.get("/niveau", MatiereController.getMatieresByUserNiveau);
-
 router.get("/:id", MatiereController.getMatiereById);
 
 /**
