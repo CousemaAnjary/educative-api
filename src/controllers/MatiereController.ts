@@ -114,6 +114,4 @@ module.exports = {
       return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
     }
   }
-
-
 }
