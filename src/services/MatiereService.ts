@@ -1,88 +1,85 @@
-import { eq } from "drizzle-orm"
-import { z } from "zod"
-import db from "../db/drizzle"
-import { matieres, users } from "../db/schema"
-import { matiereSchema } from "../schema/matiereSchema"
+import { eq } from "drizzle-orm";
+import { z } from "zod";
+import db from "../db/drizzle";
+import { matieres, users } from "../db/schema";
+import { matiereSchema } from "../schema/matiereSchema";
 
 export const MatiereService = {
   async getAllMatieres() {
-    // Récupération de toutes les matières
-    const matieresList = await db.query.matieres.findMany()
-    return matieresList
+    return await db.query.matieres.findMany();
   },
 
   async createMatiere(data: z.infer<typeof matiereSchema>) {
-    // Destructuration des données validées
-    const { nom, niveau, description, etat } = data
+    const { nom, niveau, description, etat } = data;
 
-    // Vérification si la matière existe déjà
-    const existingMatiere = await db.query.matieres.findFirst({
+    const existing = await db.query.matieres.findFirst({
       where: eq(matieres.nom, nom),
-    })
-    if (existingMatiere) throw new Error("Matière already exists")
+    });
+    if (existing) throw new Error("La matière existe déjà.");
 
-    // Insertion de la matière
-    await db.insert(matieres).values({
-      nom,
-      niveau,
-      description,
-      etat,
-    })
+    await db.insert(matieres).values({ nom, niveau, description, etat });
   },
 
   async getMatiereById(id: string) {
-    // Recherche de la matière par ID
-    const matiere = await db.query.matieres.findFirst({
-      where: eq(matieres.id, Number(id)),
-    })
-    if (!matiere) throw new Error("Matière not found")
+    const parsedId = Number(id);
+    if (isNaN(parsedId)) {
+      throw new Error("ID de matière invalide.");
+    }
 
-    return matiere
+    const matiere = await db.query.matieres.findFirst({
+      where: eq(matieres.id, parsedId),
+    });
+
+    if (!matiere) throw new Error("Matière introuvable.");
+    return matiere;
   },
 
   async getMatieresByUserId(userId: string) {
+    const user = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+    });
 
-  // 1. Récupérer le niveau de l'utilisateur
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, userId),
-  })
+    if (!user) throw new Error("Utilisateur introuvable.");
 
-  if (!user) {
-    throw new Error("Utilisateur non trouvé");
-  }
+    const matieresList = await db.query.matieres.findMany({
+      where: eq(matieres.niveau, user.niveau),
+    });
 
-  // 2. Récupérer les matières du même niveau
-  const matieresByNiveau = await db.query.matieres.findMany({
-    where: eq(matieres.niveau, user.niveau),
-  })
-
-  return matieresByNiveau
+    return matieresList;
   },
 
   async updateMatiere(id: string, data: z.infer<typeof matiereSchema>) {
+    const parsedId = Number(id);
+    if (isNaN(parsedId)) {
+      throw new Error("ID de matière invalide.");
+    }
 
-    // Destructuration des données validées
-    const { nom, niveau, description, etat } = data
+    const existing = await db.query.matieres.findFirst({
+      where: eq(matieres.id, parsedId),
+    });
 
-    // Vérification si la matière existe
-    const existingMatiere = await db.query.matieres.findFirst({ where: eq(matieres.id, Number(id))})
-    if (!existingMatiere) throw new Error("Matière not found")
+    if (!existing) throw new Error("Matière introuvable.");
 
-    // Mise à jour de la matière
     await db.update(matieres).set({
-        nom,
-        niveau,
-        description,
-        etat,
-      }).where(eq(matieres.id, Number(id)))
+      nom: data.nom,
+      niveau: data.niveau,
+      description: data.description,
+      etat: data.etat,
+    }).where(eq(matieres.id, parsedId));
   },
 
   async deleteMatiere(id: string) {
-    // Vérification si la matière existe
-    const existingMatiere = await db.query.matieres.findFirst({ where: eq(matieres.id, Number(id))})
-    if (!existingMatiere) throw new Error("Matière not found")
+    const parsedId = Number(id);
+    if (isNaN(parsedId)) {
+      throw new Error("ID de matière invalide.");
+    }
 
-    // Suppression de la matière
-    await db.delete(matieres).where(eq(matieres.id, Number(id)))
-  },
-}
+    const existing = await db.query.matieres.findFirst({
+      where: eq(matieres.id, parsedId),
+    });
+
+    if (!existing) throw new Error("Matière introuvable.");
+
+    await db.delete(matieres).where(eq(matieres.id, parsedId));
+  }
+};

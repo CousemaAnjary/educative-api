@@ -79,6 +79,9 @@ router.post("/", MatiereController.createMatiere);
  *       404:
  *         description: Matière non trouvée
  */
+
+router.get("/niveau", MatiereController.getMatieresByUserNiveau);
+
 router.get("/:id", MatiereController.getMatiereById);
 
 /**

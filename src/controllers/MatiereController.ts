@@ -55,7 +55,7 @@ module.exports = {
     }
   },
 
-  async getMatieresByUserId(req: Request, res: Response) {
+  async getMatieresByUserNiveau(req: Request, res: Response) {
     try {
       const userId = req.user?.id; // Assurez-vous que l'utilisateur est authentifié et que son ID est disponible
       if (!userId) {
