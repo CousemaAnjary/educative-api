@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const exerciceSchema = z.object({
   nom: z.string().min(1, { message: "Le nom de l'exercice est requis" }),
-  etat: z.enum(["Brouillon", "published", "archived"]).default("Brouillon"),
+  etat: z.enum(["brouillon", "published", "archived"]).default("brouillon"),  
   questions: z.array(
     z.object({
       enoncer: z.string().min(1, { message: "L'énoncé est requis" }),

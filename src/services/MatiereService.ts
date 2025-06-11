@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
 import { z } from "zod"
 import db from "../db/drizzle"
-import { matieres } from "../db/schema"
+import { matieres, users } from "../db/schema"
 import { matiereSchema } from "../schema/matiereSchema"
 
 export const MatiereService = {
@@ -38,6 +38,25 @@ export const MatiereService = {
     if (!matiere) throw new Error("Matière not found")
 
     return matiere
+  },
+
+  async getMatieresByUserId(userId: string) {
+
+  // 1. Récupérer le niveau de l'utilisateur
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  })
+
+  if (!user) {
+    throw new Error("Utilisateur non trouvé");
+  }
+
+  // 2. Récupérer les matières du même niveau
+  const matieresByNiveau = await db.query.matieres.findMany({
+    where: eq(matieres.niveau, user.niveau),
+  })
+
+  return matieresByNiveau
   },
 
   async updateMatiere(id: string, data: z.infer<typeof matiereSchema>) {
