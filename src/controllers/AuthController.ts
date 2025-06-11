@@ -29,8 +29,8 @@ module.exports = {
      if (!validatedData.success) return res.status(400).json({ success: false, error: validatedData.error.format() })
 
     try {
-        const { token } = await AuthService.login(validatedData.data);
-      return res.status(200).json({success: true, message: "Login successful", token })
+        const { token , user } = await AuthService.login(validatedData.data);
+      return res.status(200).json({success: true, message: "Login successful", token , user })
 
     } catch (error) {
       if (error instanceof Error) {
