@@ -1,12 +1,13 @@
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 import routes from "./routes";
 import { specs } from "./swagger/swaggerConfig";
 
 // Configuration
-dotenv.config();
+
 const PORT = process.env.PORT || 3000;
 
 // Initialisation

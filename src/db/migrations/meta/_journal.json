@@ -15,6 +15,13 @@
       "when": 1749202790571,
       "tag": "0001_curly_the_executioner",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1749629308716,
+      "tag": "0002_flaky_jasper_sitwell",
+      "breakpoints": true
     }
   ]
 }

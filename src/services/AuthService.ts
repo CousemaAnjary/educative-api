@@ -13,7 +13,7 @@ export const AuthService = {
   async register(data: z.infer<typeof registerSchema>) {
 
     // Destructuration des données validées
-    const { name, email, password, image } = data
+    const { name, email, password, image , niveau } = data
 
     // Vérification si l'utilisateur existe déjà
     const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) })
@@ -33,6 +33,7 @@ export const AuthService = {
       password: hashedPassword,
       image,
       roleId: role.id,
+      niveau
     })
   },
 

@@ -13,6 +13,7 @@ export const users = pgTable("users", {
   roleId: integer("role_id").notNull().references(() => roles.id, { onDelete: "cascade" }),
   password: text("password").notNull(),
   image: text("image"),
+  niveau: text("niveau").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
