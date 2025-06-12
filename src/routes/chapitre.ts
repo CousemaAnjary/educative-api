@@ -84,6 +84,51 @@ router.get("/:id", ChapitreController.getChapitreById);
 
 /**
  * @swagger
+ * /chapitres/matiere/{id}:
+ *   get:
+ *     summary: Récupère tous les chapitres d'une matière
+ *     tags: [Chapitres]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la matière dont on veut récupérer les chapitres
+ *     responses:
+ *       200:
+ *         description: Liste des chapitres de la matière récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 chapitres:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       nom:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       etat:
+ *                         type: string
+ *                       matiereId:
+ *                         type: integer
+ *       404:
+ *         description: Matière non trouvée ou aucun chapitre associé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/matiere/:id", ChapitreController.getChapitresByMatiere);
+
+/**
+ * @swagger
  * /chapitres/{id}:
  *   put:
  *     summary: Met à jour un chapitre
