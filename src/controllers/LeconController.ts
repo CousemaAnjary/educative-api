@@ -56,6 +56,27 @@ module.exports = {
     }
   },
 
+  async getLeconsByChapitreId(req: Request, res: Response) {
+    const chapitreId = req.params.chapitreId;
+  
+    try {
+      const lecons = await LeconService.getLeconsByChapitreId(chapitreId);
+  
+      if (!lecons || lecons.length === 0) {
+        return res.status(404).json({ success: false, message: "Aucune leçon trouvée pour ce chapitre" });
+      }
+  
+      return res.status(200).json({ success: true, lecons });
+  
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
+  },
+  
+
   async updateLecon(req: Request, res: Response) {
     // Validation des données d'entrée (Zod)
     const validatedData = leconSchema.safeParse(req.body)

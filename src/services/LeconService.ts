@@ -45,6 +45,14 @@ export const LeconService = {
 
   },
 
+  async getLeconsByChapitreId(chapitreId: string) {
+    const leconsList = await db.query.lecons.findMany({
+      where: eq(lecons.chapitreId, Number(chapitreId)),
+  })
+  
+    return leconsList;
+  },
+
   // Méthode pour mettre à jour une leçon
   async updateLecon(id: string, data: z.infer<typeof leconSchema>) {
 

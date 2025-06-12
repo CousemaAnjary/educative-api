@@ -64,6 +64,29 @@ router.post("/", LeconController.createLecon);
 
 /**
  * @swagger
+ * /lecons/chapitre/{chapitreId}:
+ *   get:
+ *     summary: Récupère toutes les leçons d'un chapitre spécifique
+ *     tags: [Leçons]
+ *     parameters:
+ *       - in: path
+ *         name: chapitreId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID du chapitre
+ *     responses:
+ *       200:
+ *         description: Liste des leçons récupérée avec succès
+ *       404:
+ *         description: Aucune leçon trouvée pour ce chapitre
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/leconChapitre/:chapitreId", LeconController.getLeconsByChapitreId);
+
+/**
+ * @swagger
  * /lecons/{id}:
  *   get:
  *     summary: Récupère une leçon par ID
