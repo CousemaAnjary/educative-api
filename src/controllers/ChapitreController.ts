@@ -18,6 +18,21 @@ module.exports = {
     }
   },
 
+  async getChapitresByMatiere(req: Request, res: Response) {
+    const matiereId = req.params.id;
+
+    try {
+      const chapitres = await ChapitreService.getChapitresByMatiere(matiereId);
+      return res.status(200).json({ success: true, chapitres: chapitres })
+    } catch(error) {
+       if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
+  },
+
   async createChapitre(req: Request, res: Response) {
     // Validation des données d'entrée (Zod)
         const validatedData = chapitreSchema.safeParse(req.body)

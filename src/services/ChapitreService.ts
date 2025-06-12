@@ -37,6 +37,16 @@ export const ChapitreService = {
     })
   },
 
+  async getChapitresByMatiere(id: string) {
+    const results = await db.query.chapitres.findMany({
+      where: (chapitres, { eq }) => eq(chapitres.matiereId, Number(id)),
+    })
+
+    if (!results) return [];
+
+    return results;
+  },
+
   async getChapitreById(id: string) {
     const chapitre = await db.query.chapitres.findFirst({
       where: (chapitres, { eq }) => eq(chapitres.id, Number(id)),
