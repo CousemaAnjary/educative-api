@@ -83,7 +83,7 @@ router.post("/", LeconController.createLecon);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/leconChapitre/:chapitreId", LeconController.getLeconsByChapitreId);
+router.get("/chapitre/:chapitreId", LeconController.getLeconsByChapitreId);
 
 /**
  * @swagger
