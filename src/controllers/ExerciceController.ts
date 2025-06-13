@@ -28,7 +28,7 @@ module.exports = {
 
     try {
            await exerciceService.createExercice(validatedData.data)
-           return res.status(201).json({ success: true, message: "Leçon créée avec succès" });
+           return res.status(201).json({ success: true, message: "Exercice créée avec succès" });
    
          } catch (error) {
            if (error instanceof Error) {
@@ -38,6 +38,24 @@ module.exports = {
            return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
          }
       
+  },
+
+  async getExercicesByMatiere(req: Request, res: Response) {
+    const matiereId = req.params.id;
+
+    try {
+      const exercice = await exerciceService.getExercicesByMatiere(matiereId);
+      if (!exercice) return res.status(404).json({ success: false, message: "Exercice non trouvé" });
+
+      return res.status(200).json({ success: true, exercice });
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
   },
 
   async getExerciceById(req: Request, res: Response) {

@@ -35,6 +35,16 @@ export const SimulationExamenService = {
     });
   },
 
+  async getSimulationsByMatiere(id: string) {
+    const simulation = await db.query.simulations_examen.findMany({
+      where: eq(simulations_examen.matiereId, Number(id)),
+    });
+
+    if (!simulation) return [];
+
+    return simulation;
+  },
+
   async getSimulationById(id: string) {
     // Recherche de la simulation par ID
     const simulation = await db.query.simulations_examen.findFirst({

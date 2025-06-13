@@ -101,6 +101,72 @@ router.get("/:id", ExerciceController.getExerciceById);
 
 /**
  * @swagger
+ * /exercices/matiere/{id}:
+ *   get:
+ *     summary: Récupère tous les exercices d'une matière
+ *     tags: [Exercices]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la matière dont on veut récupérer les exercices
+ *     responses:
+ *       200:
+ *         description: Liste des exercices de la matière récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 exercices:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       nom:
+ *                         type: string
+ *                       questions:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             enoncer:
+ *                               type: string
+ *                               description: L'énoncé de la question
+ *                             options:
+ *                               type: array
+ *                               items:
+ *                                 type: object
+ *                                 properties:
+ *                                   label:
+ *                                     type: string
+ *                                     description: Texte de l'option affiché à l'utilisateur
+ *                                   value:
+ *                                     type: string
+ *                                     description: Valeur associée à l'option
+ *                                   correct:
+ *                                     type: boolean
+ *                                     description: Indique si cette option est la réponse correcte
+ *                       etat:
+ *                         type: string
+ *                         enum: [brouillon, published, archived]
+ *                       leconId:
+ *                         type: integer
+ *       404:
+ *         description: Matière non trouvée ou aucun exercice associé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/matiere/:id", ExerciceController.getExercicesByMatiere);
+
+/**
+ * @swagger
  * /exercices/{id}:
  *   put:
  *     summary: Met à jour un exercice

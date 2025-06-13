@@ -64,7 +64,7 @@ router.post("/", LeconController.createLecon);
 
 /**
  * @swagger
- * /lecons/leconChapitre/{chapitreId}:
+ * /lecons/chapitre/{chapitreId}:
  *   get:
  *     summary: Récupère toutes les leçons d'un chapitre spécifique
  *     tags: [Leçons]
