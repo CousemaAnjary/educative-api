@@ -13,7 +13,7 @@ const AuthController = require("../controllers/AuthController")
 
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Enregistre un nouvel utilisateur
  *     tags:
@@ -48,7 +48,7 @@ router.post("/register", AuthController.register)
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Connecte un utilisateur existant et renvoie un token JWT
  *     tags:

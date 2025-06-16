@@ -13,7 +13,7 @@ const MatiereController = require("../controllers/MatiereController");
 
 /**
  * @swagger
- * /matieres:
+ * /api/matieres:
  *   get:
  *     summary: Récupère la liste de toutes les matières
  *     tags: [Matières]
@@ -25,7 +25,7 @@ router.get("/", MatiereController.getAllMatiere);
 
 /**
  * @swagger
- * /matieres:
+ * /api/matieres:
  *   post:
  *     summary: Crée une nouvelle matière
  *     tags: [Matières]
@@ -63,7 +63,7 @@ router.post("/", MatiereController.createMatiere);
 
 /**
  * @swagger
- * /matieres/niveau:
+ * /api/matieres/niveau:
  *   get:
  *     summary: Récupère les matières selon le niveau de l'utilisateur connecté
  *     tags: [Matières]
@@ -83,7 +83,7 @@ router.get("/niveau", MatiereController.getMatieresByUserNiveau);
 
 /**
  * @swagger
- * /matieres/{id}:
+ * /api/matieres/{id}:
  *   get:
  *     summary: Récupère une matière par son ID
  *     tags: [Matières]
@@ -103,7 +103,7 @@ router.get("/:id", MatiereController.getMatiereById);
 
 /**
  * @swagger
- * /matieres/{id}:
+ * /api/matieres/{id}:
  *   put:
  *     summary: Met à jour une matière existante
  *     tags: [Matières]
@@ -143,7 +143,7 @@ router.put("/:id", MatiereController.updateMatiere);
 
 /**
  * @swagger
- * /matieres/{id}:
+ * /api/matieres/{id}:
  *   delete:
  *     summary: Supprime une matière par ID
  *     tags: [Matières]

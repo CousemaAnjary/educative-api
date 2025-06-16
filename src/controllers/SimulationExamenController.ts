@@ -36,6 +36,24 @@ module.exports = {
     }
   },
 
+  async getSimulationsExamenByMatiere(req: Request, res: Response) {
+    const matiereId = req.params.id;
+
+    try {
+      const simulation = await SimulationExamenService.getSimulationsByMatiere(matiereId);
+      if (!simulation) return res.status(404).json({ success: false, message: "Simulation not found" });
+
+      return res.status(200).json({ success: true, simulation });
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+      // En cas d'erreur inattendue,
+      return res.status(500).json({ success: false, message: "Une erreur inconnue est survenue." });
+    }
+  },
+
   async getSimulationExamenById(req: Request, res: Response) {
     const simulationId = req.params.id;
 

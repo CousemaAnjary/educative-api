@@ -13,7 +13,7 @@ const SimulationExamenController = require("../controllers/SimulationExamenContr
 
 /**
  * @swagger
- * /simulations:
+ * /simulations-examens:
  *   get:
  *     summary: Récupère toutes les simulations d'examen
  *     tags: [Simulations d'examen]
@@ -27,72 +27,9 @@ router.get("/", SimulationExamenController.getAllSimulationsExamen)
 
 /**
  * @swagger
- * /simulations:
- *   post:
- *     summary: Crée une nouvelle simulation d'examen
- *     tags: [Simulations d'examen]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nom:
- *                 type: string
- *               etat:
- *                 type: string
- *               duree:
- *                 type: integer
- *               date:
- *                 type: string
- *                 format: date-time
- *               date_limite:
- *                 type: string
- *                 format: date-time
- *               matiereId:
- *                 type: integer
- *               questions:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     enoncer:
- *                       type: string
- *                     options:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           label:
- *                             type: string
- *                           value:
- *                             type: string
- *                           correct:
- *                             type: boolean
- *             required:
- *               - nom
- *               - etat
- *               - duree
- *               - date
- *               - date_limite
- *               - matiereId
- *               - questions
- *     responses:
- *       201:
- *         description: Simulation créée avec succès
- *       400:
- *         description: Données invalides
- *       500:
- *         description: Erreur serveur
- */
-router.post("/", SimulationExamenController.createSimulationExamen)
-
-/**
- * @swagger
- * /simulations/{id}:
+ * /simulations-examens/matiere/{id}:
  *   get:
- *     summary: Récupère une simulation d'examen par ID
+ *     summary: Récupère toutes les simulations d'examen d'une matière
  *     tags: [Simulations d'examen]
  *     parameters:
  *       - in: path
@@ -100,19 +37,73 @@ router.post("/", SimulationExamenController.createSimulationExamen)
  *         required: true
  *         schema:
  *           type: integer
+ *         description: ID de la matière dont on veut récupérer les simulations d'examen
  *     responses:
  *       200:
- *         description: Simulation trouvée
+ *         description: Liste des simulations d'examen de la matière récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 simulation:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       nom:
+ *                         type: string
+ *                       etat:
+ *                         type: string
+ *                         enum: [brouillon, published, archived]
+ *                       duree:
+ *                         type: integer
+ *                       date:
+ *                         type: string
+ *                         format: date-time
+ *                       date_limite:
+ *                         type: string
+ *                         format: date-time
+ *                       questions:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             enoncer:
+ *                               type: string
+ *                             options:
+ *                               type: array
+ *                               items:
+ *                                 type: object
+ *                                 properties:
+ *                                   label:
+ *                                     type: string
+ *                                   value:
+ *                                     type: string
+ *                                   correct:
+ *                                     type: boolean
+ *                       matiereId:
+ *                         type: integer
+ *                       created_at:
+ *                         type: string
+ *                         format: date-time
+ *                       updated_at:
+ *                         type: string
+ *                         format: date-time
  *       404:
- *         description: Simulation non trouvée
+ *         description: Matière non trouvée ou aucune simulation associée
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:id", SimulationExamenController.getSimulationExamenById)
+router.get("/matiere/:id", SimulationExamenController.getSimulationsExamenByMatiere);
 
 /**
  * @swagger
- * /simulations/{id}:
+ * /simulations-examens/{id}:
  *   put:
  *     summary: Met à jour une simulation d'examen
  *     tags: [Simulations d'examen]
@@ -140,7 +131,7 @@ router.put("/:id", SimulationExamenController.updateSimulationExamen)
 
 /**
  * @swagger
- * /simulations/{id}:
+ * /simulations-examens/{id}:
  *   delete:
  *     summary: Supprime une simulation d'examen
  *     tags: [Simulations d'examen]

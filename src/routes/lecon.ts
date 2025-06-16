@@ -64,7 +64,7 @@ router.post("/", LeconController.createLecon);
 
 /**
  * @swagger
- * /lecons/leconChapitre/{chapitreId}:
+ * /lecons/chapitre/{chapitreId}:
  *   get:
  *     summary: Récupère toutes les leçons d'un chapitre spécifique
  *     tags: [Leçons]
@@ -83,7 +83,7 @@ router.post("/", LeconController.createLecon);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/leconChapitre/:chapitreId", LeconController.getLeconsByChapitreId);
+router.get("/chapitre/:chapitreId", LeconController.getLeconsByChapitreId);
 
 /**
  * @swagger

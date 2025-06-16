@@ -37,6 +37,37 @@ export const exerciceService = {
     });
   },
 
+   async getExercicesByMatiere(matiereId: string) {
+    // 1. Récupérer tous les chapitres de la metiere
+    const chapitres = await db.query.chapitres.findMany({
+      where: (chapitres, { eq }) => eq(chapitres.matiereId, Number(matiereId)),
+    });
+    
+    if (!chapitres || chapitres.length === 0) {
+      return [];
+    }
+    
+    const chapitreIds = chapitres.map(chapitre => chapitre.id);
+    
+    // 2. Récupérer toutes les leçons des chapitres
+    const lecons = await db.query.lecons.findMany({
+      where: (lecons, { inArray }) => inArray(lecons.chapitreId, chapitreIds),
+    });
+    
+    if (!lecons || lecons.length === 0) {
+      return [];
+    }
+    
+    const leconIds = lecons.map(lecon => lecon.id);
+    
+    // 3. Récupérer tous les exercices des leçons
+    const exercicesList = await db.query.exercices.findMany({
+      where: (exercices, { inArray }) => inArray(exercices.leconId, leconIds),
+    });
+    
+    return exercicesList;
+  },
+
   async getExerciceById(id: string) {
     const exercice = await db.query.exercices.findFirst({
       where: (exercices, { eq }) => eq(exercices.id, Number(id)),
